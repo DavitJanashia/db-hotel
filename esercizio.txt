@@ -1,7 +1,21 @@
+// ESERCIZIO hotel 1
+
 SELECT * FROM `ospiti` WHERE `document_type` LIKE 'CI';
 SELECT * FROM `ospiti` WHERE YEAR(date_of_birth) > 1988;
 SELECT * FROM `ospiti` WHERE YEAR(NOW()) - YEAR(date_of_birth) > 20;
 SELECT * FROM `ospiti` WHERE name LIKE 'D%';
 SELECT COUNT(status) FROM `pagamenti` WHERE status LIKE 'accepted';
 SELECT MAX(price) FROM `pagamenti` WHERE status LIKE 'accepted';
+SELECT * FROM `ospiti` WHERE document_type LIKE 'Driver License' AND YEAR(date_of_birth) = 1975;
 SELECT SUM(beds) FROM stanze;
+
+// ESERCIZIO hotel 2
+
+// GROUP BY:
+SELECT YEAR(date_of_birth), COUNT(*) FROM ospiti GROUP BY YEAR(date_of_birth);
+SELECT status, COUNT(*) FROM pagamenti GROUP BY status;
+SELECT stanza_id, COUNT(*) FROM prenotazioni GROUP BY stanza_id;
+SELECT HOUR(created_at), COUNT(*) FROM prenotazioni GROUP BY HOUR(created_at);
+
+// JOIN:
+SELECT ospiti.name, ospiti.lastname, COUNT(*) AS number_of_bookings FROM prenotazioni_has_ospiti JOIN ospiti WHERE ospiti.id = prenotazioni_has_ospiti.ospite_id GROUP BY ospite_id HAVING count(*) > 2;

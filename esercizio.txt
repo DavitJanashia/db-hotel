@@ -20,7 +20,7 @@ SELECT HOUR(created_at), COUNT(*) FROM prenotazioni GROUP BY HOUR(created_at);
 // JOIN:
 SELECT ospiti.name, ospiti.lastname, COUNT(*) AS number_of_bookings
   FROM prenotazioni_has_ospiti JOIN ospiti
-    WHERE ospiti.id = prenotazioni_has_ospiti.ospite_id
+    ON ospiti.id = prenotazioni_has_ospiti.ospite_id
       GROUP BY ospite_id
         HAVING count(*) > 2;
 
@@ -29,9 +29,12 @@ SELECT ospiti.name, ospiti.lastname, prenotazioni_has_ospiti.prenotazione_id
     JOIN ospiti
       WHERE ospiti.id = prenotazioni_has_ospiti.ospite_id;
 
-SELECT paganti.name, paganti.lastname, pagamenti.price
-  FROM paganti JOIN pagamenti
-    WHERE YEAR(pagamenti.created_at) = 2018 AND MONTH(pagamenti.created_at) = 5;
+SELECT paganti.name, paganti.lastname, pagamenti.price, pagamenti.created_at 
+  FROM paganti 
+    JOIN pagamenti 
+      ON paganti.id = pagamenti.pagante_id 
+        WHERE YEAR(pagamenti.created_at) = 2018 AND MONTH(pagamenti.created_at) = 5;
+
 
 
 SELECT SUM(pagamenti.price) AS Tot_pagamenti_primo_piano

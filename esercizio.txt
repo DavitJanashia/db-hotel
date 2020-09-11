@@ -31,10 +31,23 @@ SELECT ospiti.name, ospiti.lastname, prenotazioni_has_ospiti.prenotazione_id
 
 SELECT paganti.name, paganti.lastname, pagamenti.price
   FROM paganti JOIN pagamenti
-    WHERE YEAR(pagamenti.created_at) = 2018 AND MONTH(pagamenti.created_at) = 5
+    WHERE YEAR(pagamenti.created_at) = 2018 AND MONTH(pagamenti.created_at) = 5;
 
 
 SELECT SUM(pagamenti.price) AS Tot_pagamenti_primo_piano
   FROM stanze JOIN pagamenti JOIN prenotazioni
     ON prenotazioni.id = pagamenti.prenotazione_id AND stanze.id = prenotazioni.stanza_id
       WHERE floor = 1;
+
+
+SELECT name, lastname, address, pagamenti.prenotazione_id
+  FROM paganti
+    JOIN pagamenti
+      ON paganti.id = pagamenti.pagante_id
+        WHERE pagamenti.prenotazione_id = 7;
+
+
+SELECT *
+  FROM stanze LEFT JOIN prenotazioni
+    ON stanze.id = prenotazioni.stanza_id
+      WHERE prenotazioni.stanza_id IS NULL;
